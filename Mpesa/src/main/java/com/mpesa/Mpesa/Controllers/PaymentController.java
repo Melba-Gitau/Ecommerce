@@ -2,6 +2,7 @@ package com.mpesa.Mpesa.Controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mpesa.Mpesa.dto.Message;
 import com.mpesa.Mpesa.dto.Payment;
 import com.mpesa.Mpesa.dto.Sms;
 import okhttp3.MediaType;
@@ -76,6 +77,46 @@ public class PaymentController {
             throw new RuntimeException(e);
         }
         return map;
+    }
+    @PostMapping("stkpush")
+    public HashMap<String,Object> map(@RequestBody  Payment payment){
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        HashMap<String, Object> map = new HashMap<>();
+        MediaType mediaType = MediaType.parse("application/json");
+        String requestbody="{\n" +
+                "                \"BusinessShortCode\": 174379,\n" +
+                "                \"Password\": \"MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjMwNDI0MTI0OTU3\",\n" +
+                "                \"Timestamp\": \"20230424124957\",\n" +
+                "                \"TransactionType\": \"CustomerPayBillOnline\",\n" +
+                "                \"Amount\": 1,\n" +
+                "                \"PartyA\": "+payment.getPhone()+",\n" +
+                "                \"PartyB\": 174379,\n" +
+                "                \"PhoneNumber\": "+payment.getPhone()+",\n" +
+                "                \"CallBackURL\": \"https://mydomain.com/path\",\n" +
+                "                \"AccountReference\": \"CompanyXLTD\",\n" +
+                "                \"TransactionDesc\": \"Payment of X\"\n" +
+                "  }";
+        okhttp3.RequestBody  body = okhttp3.RequestBody.create(mediaType,requestbody );
+        System.out.print(requestbody);
+        Request request = new Request.Builder()
+                .url("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest")
+                .method("POST", body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer BsxELXMWrynFpZLaIYHGm4sSz7Gn")
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String responseBody=response.body().string();
+            map.put("success",true);
+            map.put("message",responseBody);
+            return map;
+        } catch (IOException e) {
+            map.put("success",false);
+            map.put("message","error");
+
+            throw new RuntimeException(e);
+
+        }
     }
 }
 
