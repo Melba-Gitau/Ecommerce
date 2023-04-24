@@ -51,6 +51,7 @@ public class CustController {
             map.put("Success", true);
             map.put("Message", "Customer details updated successfully");
         } else {
+            //else
             map.put("Success", false);
             map.put("Message", "Failed to update.");
         }
