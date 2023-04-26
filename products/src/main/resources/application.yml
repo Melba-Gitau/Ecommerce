@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: PRODUCTS-CATALOGUE
+server:
+  port: 8336
