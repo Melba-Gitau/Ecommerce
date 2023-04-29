@@ -2,8 +2,9 @@ package com.example.products.Controllers;
 
 import com.example.products.Models.ProductDetails;
 import com.example.products.Services.ProductServices;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,7 @@ public class ProductController {
         return map;
     }
 
-    @PutMapping("/update/{id]")
+    @PutMapping("/update/{id}")
     public HashMap<String, Object> update(@RequestBody ProductDetails productDetails, @PathVariable Long id){
         HashMap<String, Object> map = new HashMap<>();
         if(productServices.updateProducts(id,productDetails)){

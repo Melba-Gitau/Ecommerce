@@ -5,10 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mpesa.Mpesa.dto.Message;
 import com.mpesa.Mpesa.dto.Payment;
 import com.mpesa.Mpesa.dto.Sms;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/payment")
+@RequestMapping("/product")
 public class PaymentController {
     @PostMapping("/init")
     public Map initStkpush(@RequestBody Payment payment){
@@ -80,36 +77,49 @@ public class PaymentController {
     }
     @PostMapping("stkpush")
     public HashMap<String,Object> map(@RequestBody  Payment payment){
+        Map map=new HashMap();
         OkHttpClient client = new OkHttpClient().newBuilder().build();
-        HashMap<String, Object> map = new HashMap<>();
         MediaType mediaType = MediaType.parse("application/json");
-        String requestbody="{\n" +
+        String reqeust =" {\n" +
                 "                \"BusinessShortCode\": 174379,\n" +
-                "                \"Password\": \"MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjMwNDI0MTI0OTU3\",\n" +
-                "                \"Timestamp\": \"20230424124957\",\n" +
+                "                \"Password\": \"MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjMwNDI2MTM0NjI1\",\n" +
+                "                \"Timestamp\": \"20230426134625\",\n" +
                 "                \"TransactionType\": \"CustomerPayBillOnline\",\n" +
-                "                \"Amount\": 1,\n" +
+                "                \"Amount\": "+payment.getAmount()+",\n" +
                 "                \"PartyA\": "+payment.getPhone()+",\n" +
                 "                \"PartyB\": 174379,\n" +
                 "                \"PhoneNumber\": "+payment.getPhone()+",\n" +
-                "                \"CallBackURL\": \"https://mydomain.com/path\",\n" +
+                "                \"CallBackURL\": \"https://dfa4-197-232-65-91.ngrok-free.app/payment/callback\",\n" +
                 "                \"AccountReference\": \"CompanyXLTD\",\n" +
-                "                \"TransactionDesc\": \"Payment of X\"\n" +
+                "                \"TransactionDesc\": \"Payment of X\" \n" +
                 "  }";
-        okhttp3.RequestBody  body = okhttp3.RequestBody.create(mediaType,requestbody );
-        System.out.print(requestbody);
+        System.out.println(reqeust);
+        okhttp3.RequestBody body = okhttp3.RequestBody.create(mediaType," {\n" +
+                "                \"BusinessShortCode\": 174379,\n" +
+                "                \"Password\": \"MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjMwNDI2MTM0NjI1\",\n" +
+                "                \"Timestamp\": \"20230426134625\",\n" +
+                "                \"TransactionType\": \"CustomerPayBillOnline\",\n" +
+                "                \"Amount\": "+payment.getAmount()+",\n" +
+                "                \"PartyA\": "+payment.getPhone()+",\n" +
+                "                \"PartyB\": 174379,\n" +
+                "                \"PhoneNumber\": "+payment.getPhone()+",\n" +
+                "                \"CallBackURL\": \"https://dfa4-197-232-65-91.ngrok-free.app/payment/callback\",\n" +
+                "                \"AccountReference\": \"CompanyXLTD\",\n" +
+                "                \"TransactionDesc\": \"Payment of X\" \n" +
+                "  }");
         Request request = new Request.Builder()
                 .url("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Bearer BsxELXMWrynFpZLaIYHGm4sSz7Gn")
+                .addHeader("Authorization", "Bearer N350r3AxzrFVijEwG38C9l4yG2AA")
                 .build();
+
         try {
             Response response = client.newCall(request).execute();
             String responseBody=response.body().string();
             map.put("success",true);
             map.put("message",responseBody);
-            return map;
+            return (HashMap<String, Object>) map;
         } catch (IOException e) {
             map.put("success",false);
             map.put("message","error");
@@ -118,5 +128,10 @@ public class PaymentController {
 
         }
     }
-}
+    @PostMapping("callback")
+    public void paymentprocess(@RequestBody Object object){
+        System.out.println("called");
+        System.out.println(object);
 
+    }
+}

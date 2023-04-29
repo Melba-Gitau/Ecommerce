@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: STOCK-SERVICE
+server:
+  port: 8456

@@ -32,9 +32,8 @@ public class ProductServices {
         if(oldProduct.isPresent()){
             try{
                 ProductDetails updated =oldProduct.get();
-                updated.setName(productDetails.getName());
-                updated.setPrice(productDetails.getPrice());
-                updated.setQuantity(productDetails.getQuantity());
+                updated.setProduct_name(productDetails.getProduct_name());
+                updated.setDescription(productDetails.getDescription());
                 productRepo.save(productDetails);
                 return true;
             }catch(Exception e){
