@@ -1,7 +1,7 @@
 package com.example.products.Services;
 
 import com.example.products.Models.ProductDetails;
-import com.example.products.ProductRepo.ProductRepo;
+import com.example.products.Repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,9 @@ public class ProductServices {
             return false;
         }
     }
-
+    public Optional<ProductDetails> getProduct(long id){
+        return productRepo.findById(id);
+    }
     public List<ProductDetails> productList(){
          return productRepo.findAll();
     }

@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ORDERS
+server:
+  port: 8080

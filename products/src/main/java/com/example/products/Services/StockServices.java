@@ -1,11 +1,13 @@
 package com.example.products.Services;
 
 import com.example.products.Models.Stock;
-import com.example.products.ProductRepo.StockRepo;
+import com.example.products.Repo.StockRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,10 @@ public class StockServices {
 
     public List<Stock> listOfStock(){
         return stockRepo.findAll();
+    }
+
+    public List<Stock> getStockId(Long id) {
+        return stockRepo.findAllByProductid(id);
     }
 
     public boolean updateStock(Long id, Stock stock){
@@ -53,6 +59,18 @@ public class StockServices {
         }else{
             return false;
         }
+    }
+    public Map<String,Object> getStockBalance(Long productId){
+        double quantity=0;
+        List<Stock> stocks=stockRepo.findAllByProductid(productId);
+        for (Stock stock:stocks) {
+            quantity+=stock.getQuantity();
+        }
+
+        Map <String,Object> map=new HashMap<>();
+        map.put("entries",stocks);
+        map.put("total",quantity);
+        return map;
     }
 
 }
