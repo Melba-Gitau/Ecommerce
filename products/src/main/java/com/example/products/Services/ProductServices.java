@@ -36,6 +36,8 @@ public class ProductServices {
                 ProductDetails updated =oldProduct.get();
                 updated.setProduct_name(productDetails.getProduct_name());
                 updated.setDescription(productDetails.getDescription());
+                updated.setImage(productDetails.getImage());
+                updated.setPrice(productDetails.getPrice());
                 productRepo.save(productDetails);
                 return true;
             }catch(Exception e){

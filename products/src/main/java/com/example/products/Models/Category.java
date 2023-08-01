@@ -8,27 +8,19 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "products_catalogue")
+@Table(name = "Category")
 @Data
-public class ProductDetails {
-
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column (nullable= false)
-
-    String product_name;
-
-    @Column (nullable= false)
-    String description;
-    @Column(nullable = false)
-    String image;
 
     @Column(nullable = false)
-    double price;
+    String name;
 
     @CreationTimestamp
     Timestamp created_at;
+
     @UpdateTimestamp
     Timestamp updated_at;
 }
