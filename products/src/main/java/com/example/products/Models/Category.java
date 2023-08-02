@@ -18,6 +18,12 @@ public class Category {
     @Column(nullable = false)
     String name;
 
+    @Column(nullable = false)
+    String image;
+
+    @Column(nullable = false)
+    String Description;
+
     @CreationTimestamp
     Timestamp created_at;
 

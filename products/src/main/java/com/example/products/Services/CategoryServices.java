@@ -37,6 +37,8 @@ public class CategoryServices {
             try {
                 Category updated = oldCategory.get();
                 updated.setName(category.getName());
+                updated.setImage(category.getImage());
+                updated.setDescription(category.getDescription());
                 categoryRepo.save(category);
                 return true;
             } catch (Exception e) {
