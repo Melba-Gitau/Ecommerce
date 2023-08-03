@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired

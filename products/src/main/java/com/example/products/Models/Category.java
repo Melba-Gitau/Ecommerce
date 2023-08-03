@@ -22,7 +22,7 @@ public class Category {
     String image;
 
     @Column(nullable = false)
-    String Description;
+    String description;
 
     @CreationTimestamp
     Timestamp created_at;

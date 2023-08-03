@@ -1,7 +1,6 @@
 package com.example.products.Services;
 
 import com.example.products.Models.Category;
-import com.example.products.Models.ProductDetails;
 import com.example.products.Repo.CategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
