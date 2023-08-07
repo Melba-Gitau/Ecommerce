@@ -14,11 +14,11 @@ import java.util.List;
 @RequestMapping("/subcategory")
 public class SubCategoryController {
     @Autowired
-    SubCategoryServices subCategoryServices;
+    SubCategoryServices subcategoryServices;
     @PostMapping("/create")
     public HashMap<String, Object> create(@RequestBody Subcategory subcategory){
         HashMap <String, Object> map = new HashMap<>();
-        if(subCategoryServices.create(subcategory)){
+        if(subcategoryServices.create(subcategory)){
             map.put("Success",true);
             map.put("Message","Details added successfully");
         }else{
@@ -31,7 +31,7 @@ public class SubCategoryController {
     @GetMapping("/list")
     public HashMap< String, Object> list(){
         HashMap<String, Object> map = new HashMap<>();
-        List<Subcategory> subcategory= subCategoryServices.list();
+        List<Subcategory> subcategory= subcategoryServices.list();
         if(subcategory.isEmpty()){
             map.put("Success",false);
             map.put("Message"," not found");
@@ -45,7 +45,7 @@ public class SubCategoryController {
     @PutMapping("/update{id}")
     public HashMap< String, Object> update(@RequestBody Subcategory subcategory, @PathVariable Long id){
         HashMap<String, Object> map = new HashMap<>();
-        if(subCategoryServices.update(id,subcategory)){
+        if(subcategoryServices.update(id,subcategory)){
             map.put("Success", true);
             map.put("Message", "details updated successfully");
         } else {
@@ -58,7 +58,7 @@ public class SubCategoryController {
     @DeleteMapping("/delete{id}")
     public HashMap< String, Object> delete(@PathVariable Long id){
         HashMap<String, Object> map = new HashMap<>();
-        if(subCategoryServices.delete(id)){
+        if(subcategoryServices.delete(id)){
             map.put("Success", true);
             map.put("Message", " Category deleted successfully");
         } else {

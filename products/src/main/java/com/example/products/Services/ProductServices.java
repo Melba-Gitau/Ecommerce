@@ -34,6 +34,7 @@ public class ProductServices {
         if(oldProduct.isPresent()){
             try{
                 ProductDetails updated =oldProduct.get();
+                updated.setSubcategory_id(productDetails.getSubcategory_id());
                 updated.setProduct_name(productDetails.getProduct_name());
                 updated.setDescription(productDetails.getDescription());
                 updated.setImage(productDetails.getImage());

@@ -15,6 +15,9 @@ public class ProductDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @Column(nullable = false)
+    String subcategory_id;
     @Column (nullable= false)
 
     String product_name;

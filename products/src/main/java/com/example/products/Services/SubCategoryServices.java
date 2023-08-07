@@ -3,11 +3,14 @@ package com.example.products.Services;
 import com.example.products.Models.Category;
 import com.example.products.Models.Subcategory;
 import com.example.products.Repo.SubcategoryRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class SubCategoryServices {
+    @Autowired
     SubcategoryRepo subcategoryRepo;
     public boolean create(Subcategory subcategory) {
         try {
