@@ -12,12 +12,13 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("products")
+@RequestMapping("/products")
 public class ProductController {
     @Autowired
     ProductServices productServices;
     @PostMapping("/create")
     public HashMap<String, Object> create(@RequestBody ProductDetails productDetails){
+
         HashMap<String, Object> map = new HashMap<>();
         if(productServices.create(productDetails)){
             map.put("Success",true);
@@ -30,7 +31,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public HashMap<String, Object> read(){
         HashMap<String, Object> map = new HashMap<>();
         List<ProductDetails> product= productServices.productList();

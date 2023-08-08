@@ -19,12 +19,11 @@ public class ProductDetails {
     @Column(nullable = false)
     String subcategory_id;
     @Column (nullable= false)
-
     String product_name;
 
     @Column (nullable= false)
     String description;
-    @Column(nullable = false)
+    @Column(nullable = false,length = 65555)
     String image;
 
     @Column(nullable = false)

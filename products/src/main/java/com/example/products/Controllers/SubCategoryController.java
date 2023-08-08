@@ -42,7 +42,7 @@ public class SubCategoryController {
         return map;
     }
 
-    @PutMapping("/update{id}")
+    @PutMapping("/update/{id}")
     public HashMap< String, Object> update(@RequestBody Subcategory subcategory, @PathVariable Long id){
         HashMap<String, Object> map = new HashMap<>();
         if(subcategoryServices.update(id,subcategory)){
@@ -55,7 +55,7 @@ public class SubCategoryController {
         return map;
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public HashMap< String, Object> delete(@PathVariable Long id){
         HashMap<String, Object> map = new HashMap<>();
         if(subcategoryServices.delete(id)){
