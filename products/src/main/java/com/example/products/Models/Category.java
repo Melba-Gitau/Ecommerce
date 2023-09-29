@@ -15,11 +15,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-
     @Column(nullable = false)
     String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 65555)
     String image;
 
     @Column(nullable = false)

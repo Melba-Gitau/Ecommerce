@@ -110,9 +110,11 @@ public class MpesaApi {
         }
 
     }
+    //processes the response received from mpesa stkpush
     @PostMapping("/xzcstr/url")
     public void getURL(@RequestBody String response) {
         System.out.print(response);
+        //extracts relevant info from json
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
         JsonObject Body = jsonObject.get("Body").getAsJsonObject();
@@ -120,6 +122,8 @@ public class MpesaApi {
         String MerchantRequestID = stkCallback.get("MerchantRequestID").getAsString();
         String CheckoutRequestID = stkCallback.get("CheckoutRequestID").getAsString();
         double ResultCode = stkCallback.get("ResultCode").getAsDouble();
+
+        //checks if transaction was successful if successful extracts amount and receipt
         if (ResultCode == 0) {
             JsonObject CallbackMetaData = stkCallback.get("CallbackMetadata").getAsJsonObject();
             JsonArray Item = CallbackMetaData.get("Item").getAsJsonArray();
@@ -133,6 +137,7 @@ public class MpesaApi {
                 mpesa.setTransactionCode(receipt);
                 mpesa.setStatus(1);
                 mpesaService.save(mpesa);
+                //sends confirmation message to customer
                 OkHttpClient client = new OkHttpClient().newBuilder()
                         .build();
                 MediaType mediaType = MediaType.parse("application/json");
@@ -152,7 +157,7 @@ public class MpesaApi {
                 }
 
             }
-
+//if transaction failed
         } else {
             Optional<Mpesa> transaction_code = mpesaService.findByMerchantIdAndCheckoutId(MerchantRequestID, CheckoutRequestID);
             if (transaction_code.isPresent()) {
